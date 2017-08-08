@@ -11,7 +11,8 @@
 ## Adding Wi-Fi plugs
 1. Run the script 'wifi_plug.py'
 2. Plug in a new Tp-Link Wi-Fi plug and connect it to your network
-3. Publish a MQTT message to the topic as 'wifiplug_add_(Device-ID)' > Device-ID start from 1
+3. Publish a MQTT message to the topic as 'wifiplug_add_(Device-ID)' 
+> Device-ID start from 1
 4. Continue step 2 and 3 to add new plugs and change the id as you go on
 
 ## Controlling Plug
