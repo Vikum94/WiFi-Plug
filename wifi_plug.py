@@ -10,15 +10,14 @@ cidr2 = '192.168.1.0/24' #Network address
 
 msgQ = Queue.Queue() #To insert the mqtt commands
 host = "192.168.1.182" #Mqtt broker address
+topic = 'g1'
 
 dev_path = 'devices.txt'
 ips = [] #Ip addresses of all Wi-Fi plugs
 
-msgQ = Queue.Queue()
-
 def on_connect(client, userdata, flags, rc): #When this cline connect to the broker this method runs
         print("Client Connected "+str(rc))
-        client.subscribe("g1")
+        client.subscribe(topic)
 
 def on_message(client, userdata, message): #On incomming msg to the subscriberd topic, this method runs
         msg = str(message.payload.decode("utf-8"))
