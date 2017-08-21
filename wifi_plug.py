@@ -3,13 +3,14 @@ import nmap
 import paho.mqtt.client as mqtt
 import Queue
 import logging
+import time
 
 logging.basicConfig(filename='/home/vikum/wifiplug_log_testing.log',level=logging.DEBUG)
 
 cidr2 = '192.168.1.0/24' #Network address
 
 msgQ = Queue.Queue() #To insert the mqtt commands
-host = "192.168.1.182" #Mqtt broker address
+host = "10.1.3.32" #Mqtt broker address
 topic = 'g1'
 
 dev_path = 'devices.txt'
@@ -111,6 +112,19 @@ client.on_connect = on_connect
 
 findAddedPlugs()
 client.loop_start()
+nw_time = time.time()
+outString = ''
 while (True):
-        if(not msgQ.empty()):
-                command(msgQ.get())
+	if(nw_time+10<time.time()):
+		print 'loop'
+		try:	
+			plug = SmartPlug(ips[0])
+			outString = 'wifiPlug_'+str(plug.current_consumption())
+			client.publish('g1', outString)
+			print 'Sending msg '+outString
+			nw_time = time.time()
+		except:
+			print 'Dificult to get data'
+
+	if not msgQ.empty():
+		command(msgQ.get())
